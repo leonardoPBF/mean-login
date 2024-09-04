@@ -1,0 +1,17 @@
+
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Nombre:</label>
+    <input id="name" formControlName="name" type="text">
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input id="email" formControlName="email" type="email">
+  </div>
+  <div>
+    <label for="password">Contraseña:</label>
+    <input id="password" formControlName="password" type="password">
+  </div>
+  <button type="submit">Registrarse</button>
+</form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.1/signalr.min.js"></script>
