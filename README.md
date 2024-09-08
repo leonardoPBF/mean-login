@@ -4,15 +4,16 @@ This project was generated with
 
 - [Angular CLI](https://github.com/angular/angular-cli) version 17.3.9.
 
-- Base de datos mongo DB (local):
+- Using express
+
+- Data base mongo DB (local):
   - mongoDB Community server [Community Server](https://www.mongodb.com/try/download/community)  
   - MongoDB Compass Download (GUI) version 1.44.3  [Mongo Compass](https://www.mongodb.com/try/download/compass)  
 
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
-using express
+***recommendation***, run visual studio in administrator before using `ng serve` To start the development server, run:
 
 ```
 npm install
@@ -21,24 +22,30 @@ ng serve
 ng serve --open //abre directamente en el explorador
 ```
 
-## Backend run
+Navigate to http://localhost:4200/. The application will automatically reload if you change any of the source files.
 
-Run `backend` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Backend server
+
+To start the backend server, run:
 
 ```
 cd backend
 node app.js
 ```
+Navigate to http://localhost:5000/. to check if the backend server is running
 
-## Common error
+###  Common error => *EBUSY: resource busy or locked*
 
-EBUSY: resource busy or locked, you can try "ng serve" in admi mode vsc or fix whit the following comands: 
+If you encounter this error:
+
+  1. open Visual Studio Code in administration mode.
+  2. Or, try the following commands:
 
 ```
-npm cache clean --force?
+npm cache clean --force
 npm install --cache
 ```
-if dosent work you can try deleting the temporal data of %temp% `windows + R` put `%temp%` and delete.
+If these commands don’t work, try deleting the temporary data in %temp%. Press Windows + R, type %temp%, and delete the files.
 
 ## Code scaffolding
 
