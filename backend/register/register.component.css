@@ -6,6 +6,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.password-icon {
+  float: right;
+  position: relative;
+  margin: -25px 10px 0 0;
+  cursor: pointer;
+}
+
 hgroup {
 	text-align:center;
 	margin-top: 2em;

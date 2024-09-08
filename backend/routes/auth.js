@@ -38,12 +38,24 @@ router.post('/login', async (req, res) => {
     const payload = { user: { id: user.id }};
     jwt.sign(payload, 'secret', { expiresIn: 360000 }, (err, token) => {
       if (err) throw err;
+
+      req.session.user = { id: user.id, name: user.name, email: user.email }; //manejo de sesion
       res.json({ token });
     });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
   }
+});
+
+// Logout de usuario
+router.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send('Error al cerrar sesión');
+    }
+    res.send('Sesión cerrada');
+  });
 });
 
 module.exports = router;

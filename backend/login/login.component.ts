@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -45,21 +46,22 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
-      this.successMessage = 'Usuario autenticado';
-      this.authService.login(this.loginForm.value).subscribe(
-        (response) => {
-          this.router.navigate(['/']);
-          console.log('Usuario autenticado:', response)
-        },
-        (error) => {
-          this.errorMessage = 'El usuario ingresado no existe, verifica tu contraseña e email';
-          console.error('Error en autenticación:', error)
 
-        },
-      );
-    }else{
-      this.errorMessage = 'Por favor, completa todos los campos correctamente.';
-    }
+      if (this.loginForm.valid) {
+        this.authService.login(this.loginForm.value).subscribe(
+          (response) => {
+            this.router.navigate(['/']);
+            console.log('Usuario autenticado:', response)
+          },
+          (error) => {
+            this.errorMessage = 'Error, verifica tu contraseña e email';
+            console.error('Error en autenticación:', error)
+
+          },
+        );
+      }else{
+        this.errorMessage = 'Por favor, completa todos los campos correctamente.';
+      }
+
   }
 }

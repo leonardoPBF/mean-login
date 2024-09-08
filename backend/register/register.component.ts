@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NG_ASYNC_VALIDATORS, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { Renderer2 } from '@angular/core';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +27,8 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required,],
+      confirmPassword: ['', Validators.required]
     });
   }
 
@@ -49,20 +51,29 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.registerForm.valid) {
-      this.authService.register(this.registerForm.value).subscribe(
-        (response) => {
-          this.router.navigate(['/']);
-          console.log('Usuario autenticado:', response)
-        },
-        (error) => {
-          this.errorMessage = 'El usuario ingresado no existe, verifica tu contraseña e email';
-          console.error('Error en autenticación:', error)
 
-        },
-      );
+    const password = this.registerForm.get('password')?.value;
+    const confirmPassword = this.registerForm.get('confirmPassword')?.value;
+
+    if(password == confirmPassword){
+      if (this.registerForm.valid) {
+
+        this.authService.register(this.registerForm.value).subscribe(
+          (response) => {
+            console.log('Usuario creado:', response)
+            this.successMessage = 'Usuario creado correctamente';
+          },
+          (error) => {
+            this.errorMessage = 'Es posible que el usuario ya este registrado, prueba con otro correo';
+            console.error('Error en autenticación:', error)
+          },
+        );
+      }else{
+        this.errorMessage = 'Por favor, completa todos los campos correctamente.';
+      }
     }else{
-      this.errorMessage = 'Por favor, completa todos los campos correctamente.';
+      console.log('las contraseñas no coinciden')
+      this.errorMessage = 'Contraseñas no coinciden';
     }
   }
 }
