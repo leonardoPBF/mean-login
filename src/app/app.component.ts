@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AuthService } from '../../backend/auth.service';
 import { AppRoutingModule, routes } from './app.routes';
+import { BootstrapOptions } from '@angular/core';
+import { Script } from 'vm';
 
 @Component({
   selector: 'app-root',

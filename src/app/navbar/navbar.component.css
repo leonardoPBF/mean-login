@@ -13,3 +13,8 @@ mat-toolbar {
 mat-sidenav-container {
   margin-top: 64px; /* Altura del toolbar */
 }
+
+nav{
+  background: rgb(25, 241, 166);
+
+}

@@ -1,17 +1,26 @@
-
+<hgroup>
+  <h1 class="text-center">Register</h1>
+</hgroup>
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="name">Nombre:</label>
-    <input id="name" formControlName="name" type="text">
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+  <div class="group">
+    <input id="name" formControlName="name" type="text"><span class="highlight"></span><span class="bar"></span>
+    <label for="name">Nombre</label>
   </div>
-  <div>
-    <label for="email">Email:</label>
-    <input id="email" formControlName="email" type="email">
+  <div class="group">
+    <input type="email" formControlName="email"><span class="highlight"></span><span class="bar"></span>
+    <label for="email" >Email</label>
   </div>
-  <div>
-    <label for="password">Contraseña:</label>
-    <input id="password" formControlName="password" type="password">
+  <div class="group">
+    <input type="password" formControlName="password"><span class="highlight"></span><span class="bar"></span>
+    <label for="password" >Password</label>
   </div>
-  <button type="submit">Registrarse</button>
+  <button type="submit" class="button buttonBlue">Register
+    <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
+  </button>
 </form>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.1/signalr.min.js"></script>
+<div class="foot" ><a href="http://www.polymer-project.org/" target="_blank"><img src="https://www.polymer-project.org/images/logos/p-logo.svg"></a>
+  <p>You Gotta Love <a href="http://www.polymer-project.org/" target="_blank">Google</a></p>
+</div>
+
