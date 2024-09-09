@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-
 import { FormBuilder, FormGroup, NG_ASYNC_VALIDATORS, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -7,7 +6,6 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { Renderer2 } from '@angular/core';
 import { of } from 'rxjs';
-
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -21,6 +19,10 @@ export class RegisterComponent implements OnInit {
   errorMessage: string = '';
   successMessage: string = '';
 
+  //variables para cambiar visibilidad de la contraseña
+  passwordVisible: boolean = false;
+  confirmPasswordVisible: boolean = false;
+
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router,
   private renderer: Renderer2, @Inject(DOCUMENT) private document: Document
   ) {
@@ -29,7 +31,22 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required,],
       confirmPassword: ['', Validators.required]
-    });
+    }, { validator: this.passwordMatchValidator });
+  }
+
+  //validacion de contraseña en vivo
+  passwordMatchValidator(formGroup: FormGroup) {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { mismatch: true };
+  }
+
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
+
+  toggleConfirmPasswordVisibility(): void {
+    this.confirmPasswordVisible = !this.confirmPasswordVisible;
   }
 
   ngOnInit(): void {
@@ -40,6 +57,7 @@ export class RegisterComponent implements OnInit {
       this.loadLoginScript(); // Cargar login.js después de que jQuery esté disponible
     };
     this.renderer.appendChild(this.document.body, jqueryScript);
+
   }
   //script de formulario personalizado
   loadLoginScript(): void {
@@ -54,6 +72,8 @@ export class RegisterComponent implements OnInit {
 
     const password = this.registerForm.get('password')?.value;
     const confirmPassword = this.registerForm.get('confirmPassword')?.value;
+
+    const email = this.registerForm.get('email')?.value;
 
     if(password == confirmPassword){
       if (this.registerForm.valid) {
@@ -76,4 +96,6 @@ export class RegisterComponent implements OnInit {
       this.errorMessage = 'Contraseñas no coinciden';
     }
   }
-}
+
+ }
+

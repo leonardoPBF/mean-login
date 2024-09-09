@@ -11,17 +11,33 @@
   <div class="group">
     <input type="email" formControlName="email"><span class="highlight"></span><span class="bar"></span>
     <label for="email" >Email</label>
-  </div>
-  <div class="group">
-    <input type="password" formControlName="password"><span class="highlight"></span><span class="bar"></span>
-    <label for="password" >Password</label>
 
   </div>
   <div class="group">
-    <input type="password" formControlName="confirmPassword"><span class="highlight"></span><span class="bar"></span>
+    <div class="row">
+      <div class="col-9">
+        <input type="password" formControlName="password" [type]="confirmPasswordVisible ? 'text' : 'password'"><span class="highlight" ></span><span class="bar"></span>
+        <label for="password" >Password</label>
+      </div>
+      <div class="col-3">
+        <button type="button" class="btn btn-outline-success" (click)="toggleConfirmPasswordVisibility()">
+          <i class="fa fa-eye" ></i><span class="badge badge-light">{{ confirmPasswordVisible ? 'Ocultar' : 'Mostrar' }}</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <div class="group">
+    <input type="password" formControlName="confirmPassword" [type]="confirmPasswordVisible ? 'text' : 'password'"><span class="highlight"></span><span class="bar"></span>
     <label for="confirmPassword" >Password</label>
 
+    <div class="alert alert-warning alert-dismissible fade show" *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched">
+      Las contraseñas no coinciden.
+    </div>
   </div>
+
+
+
   <button type="submit" class="button buttonBlue">Register
     <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
   </button>

@@ -21,10 +21,12 @@
           <a class="nav-link" href="#">objetivo</a>
         </li>
 
-        <li class="nav-item" id="logoutButton" style="display:none;">
-          <a class="nav-link" href="#">Cerrar sesion</a>
+        <li *ngIf="isLoggedIn" class="nav-item" id="logoutButton" >
+          <a (click)="logout()" class="nav-link" >Cerrar sesion</a>
         </li>
-
+        <li *ngIf="isLoggedIn" class="nav-item" id="logoutButton" >
+          <a [routerLink]="['/perfil']" class="nav-link" >{{ currentUser?.email }}</a>
+        </li>
       </ul>
       <div class="d-lg-flex col-lg-2 justify-content-lg-end">
         <a class="btn btn-primary" routerLink="/register">Registro</a>

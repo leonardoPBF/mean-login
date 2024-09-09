@@ -58,4 +58,15 @@ router.post('/logout', (req, res) => {
   });
 });
 
+app.post('/login', (req, res) => {
+  // Autenticar usuario...
+  if (usuarioAutenticado) {
+    req.session.user = { id: usuario.id, email: usuario.email };
+    res.send({ success: true, user: req.session.user });
+  } else {
+    res.status(401).send({ success: false, message: 'Credenciales inválidas' });
+  }
+});
+
+
 module.exports = router;

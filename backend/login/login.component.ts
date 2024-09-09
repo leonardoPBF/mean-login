@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-
+    console.log('boton accionado')
       if (this.loginForm.valid) {
         this.authService.login(this.loginForm.value).subscribe(
           (response) => {
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
         );
       }else{
         this.errorMessage = 'Por favor, completa todos los campos correctamente.';
+        console.log('Error al logearse')
       }
-
   }
 }

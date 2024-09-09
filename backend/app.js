@@ -15,7 +15,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', auth);
-app.use('/auth', authRoutes);
 
 app.use(session({
   secret: 'tu_clave_secreta',
