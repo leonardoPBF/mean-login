@@ -1,4 +1,4 @@
-<script src="src/assets/js/login.js" type="text/javascript" async></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <nav class="navbar navbar-expand-lg " aria-label="Eleventh navbar example">
   <div class="container-fluid">
     <div class="col-lg-2">
@@ -22,7 +22,7 @@
         </li>
 
         <li *ngIf="isLoggedIn" class="nav-item" id="logoutButton" >
-          <a (click)="logout()" class="nav-link" >Cerrar sesion</a>
+          <a  (click)="logout()" class="nav-link" style="cursor: pointer;;">Cerrar sesion</a>
         </li>
         <li *ngIf="isLoggedIn" class="nav-item" id="logoutButton" >
           <a [routerLink]="['/perfil']" class="nav-link" >{{ currentUser?.email }}</a>

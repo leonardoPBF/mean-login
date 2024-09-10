@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router'; // Importa RouterModule para usar routerLink
 import { AuthService } from '../../../backend/auth.service';
 import { Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +17,7 @@ export class NavbarComponent implements OnInit{
   isLoggedIn: boolean = false;
   currentUser: any = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router,private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
 
@@ -31,7 +32,9 @@ export class NavbarComponent implements OnInit{
 
   logout() {
     this.authService.logout().subscribe(() => {
-      this.router.navigate(['/']);
+      this.isLoggedIn = false;
+      this.router.navigate(['/home']);
+      this.cdr.detectChanges(); // Forzar la detección de cambios
     });
   }
 

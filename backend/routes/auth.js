@@ -38,8 +38,12 @@ router.post('/login', async (req, res) => {
     const payload = { user: { id: user.id }};
     const token = jwt.sign(payload, 'secret', { expiresIn: '10h' });
 
+    if (!req.session) {
+      req.session = {}; // Inicializa `req.session` si es `undefined`
+    }
     req.session.user = { id: user.id, name: user.name, email: user.email }; //manejo de sesión
     res.json({ token, user: req.session.user });
+
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -47,14 +51,19 @@ router.post('/login', async (req, res) => {
 });
 
 // Logout de usuario
-router.post('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).send('Error al cerrar sesión');
-    }
-    res.send('Sesión cerrada');
-  });
+router.post('/logout', async (req, res) => {
+  if (req.session) {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ msg: 'Error al cerrar sesión' });
+      }
+      res.json({ msg: 'Sesión cerrada' });
+    });
+  } else {
+    res.status(400).json({ msg: 'No hay sesión activa' });
+  }
 });
+
 
 
 module.exports = router;
