@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../../backend/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
@@ -49,13 +49,12 @@ export class LoginComponent implements OnInit {
       if (this.loginForm.valid) {
         this.authService.login(this.loginForm.value).subscribe(
           (response) => {
-            this.router.navigate(['/']);
             console.log('Usuario autenticado:', response)
+            this.router.navigate(['/']);
           },
           (error) => {
             this.errorMessage = 'Error, verifica tu contraseña e email';
             console.error('Error en autenticación:', error)
-
           },
         );
       }else{

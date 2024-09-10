@@ -10,19 +10,17 @@ mongoose.connect('mongodb+srv://leonardobf140224:idjWzN3dhCQUNqC7@prueba2.0abaq.
   .then(() => console.log('Conectado a MongoDB'))
   .catch(err => console.error('No se pudo conectar a MongoDB...', err));
 
+app.use(session({
+  secret: 's3cr3tK3yTh@t1sV3ryH@rd2Gu3ss',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true } // true for https
+}));
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', auth);
-
-app.use(session({
-  secret: 'tu_clave_secreta',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false } // Cambia a true si usas HTTPS
-}));
-
 
 // Ruta de ejemplo para verificar que el servidor funciona
 app.get('/', (req, res) => res.send('API Running'));
