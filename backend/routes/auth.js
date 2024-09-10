@@ -36,12 +36,10 @@ router.post('/login', async (req, res) => {
     if (!isMatch) return res.status(400).json({ msg: 'Credenciales inválidas' });
 
     const payload = { user: { id: user.id }};
-    jwt.sign(payload, 'secret', { expiresIn: 360000 }, (err, token) => {
-      if (err) throw err;
+    const token = jwt.sign(payload, 'secret', { expiresIn: '10h' });
 
-      req.session.user = { id: user.id, name: user.name, email: user.email }; //manejo de sesion
-      res.json({ token });
-    });
+    req.session.user = { id: user.id, name: user.name, email: user.email }; //manejo de sesión
+    res.json({ token, user: req.session.user });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -56,16 +54,6 @@ router.post('/logout', (req, res) => {
     }
     res.send('Sesión cerrada');
   });
-});
-
-app.post('/login', (req, res) => {
-  // Autenticar usuario...
-  if (usuarioAutenticado) {
-    req.session.user = { id: usuario.id, email: usuario.email };
-    res.send({ success: true, user: req.session.user });
-  } else {
-    res.status(401).send({ success: false, message: 'Credenciales inválidas' });
-  }
 });
 
 
